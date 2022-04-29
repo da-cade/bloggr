@@ -6,10 +6,10 @@
           <div class="p-2">
             <h2>{{blog.name}}</h2>
             <h5>{{blog.title}}</h5>
-            <p class="overflow">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita fugit ullam facilis blanditiis nostrum doloremque optio commodi est deserunt consequatur repudiandae ea aliquam, consectetur, quasi consequuntur beatae. Iusto, earum eos.</p>
+            <p class="overflow">{{blog.body}}</p>
             <button class="btn btn-secondary" v-if="route.params.id == blog.creatorId" @click.stop="goToDetails()">BUTTON!</button>
           </div>
-          <div>
+          <div class="ms-auto">
             <img class="img-fluid rounded" :src="blog.imgUrl" alt="">
           </div>
         </div>
@@ -50,5 +50,7 @@ export default {
 
 
 <style lang="scss" scoped>
-
+  img{
+    max-height: 20vh;
+  }
 </style>

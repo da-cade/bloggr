@@ -2,20 +2,37 @@
   <div class="container">
     <!-- This is the profile -->
     <div class="row">
-      <div class="col-4">
+      <div class="col-4 d-flex justify-content-center">
         <img class="img-fluid rounded-circle m-4" :src="profile.picture">
       </div>
-      <div class="col-8 justify-content-center">
-        <h2 class="m-3">{{profile.name}}</h2>
-        <button class="m-3">Edit</button>
+      <div class="col-8 profile-info d-flex flex-column justify-content-center">
+        <h2 class="">Username: {{profile.name}}</h2>
+        <div v-if="account.id === route.params.id">
+          <h6>{{ account.email }}</h6>
+          <h6>{{ account.createdAt }}</h6>
+        </div>
+        <div class="d-flex">
+          <i class="mdi mdi-pencil bg-warning rounded selectable p-2" v-if="account.id === route.params.id"></i>
+        </div>
+        <h6>{{account.bio}}</h6>
       </div>
-      <div class="col-12">
-        <button>New Post</button>
+      <div class="col-4">
+        <button class="btn btn-warning ms-5 mt-3" v-if="account.id === route.params.id" data-bs-toggle="modal" data-bs-target="#new-post-modal">New Post</button>
       </div>
     </div>
   <!-- Repeat our blog components here -->
     <Blog  v-for="b in blogs" :key="b.id" :blog="b"/>
    </div>
+
+  <Modal id="new-post-modal">
+    <template #modal-title-slot>
+      <h3>Create a Blog</h3>
+    </template>
+    <template #modal-body-slot>
+      <BlogForm />
+    </template>
+  </Modal>
+
 </template>
 
 
@@ -46,7 +63,8 @@ export default {
       return {
       account: computed(() => AppState.account),
       blogs: computed(()=> AppState.searchResults),
-      profile: computed(()=> AppState.activeProfile)
+      profile: computed(()=> AppState.activeProfile),
+      route
     }
 }
 }
@@ -54,5 +72,10 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.profile-info{
+  min-height: 30vh;    
+}
+img{
+  min-height: 15vh
+}
 </style>
