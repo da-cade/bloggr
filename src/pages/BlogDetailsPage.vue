@@ -2,22 +2,23 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <img :src="imgUrl" alt="">
+        <!-- this is not a thing, it's only ever the coverImg of the account who created it... -->
+        <img :src="blogContent.imgUrl" alt="">
       </div>
     </div>
     <div class="row">
       <div class="col-12">
         <div>
-        <img src="" alt="">
+          <img :src="profile.coverImg" alt="" class="img-fluid">
         </div>
         <div>
-          <h4>Title</h4>
+          <h4>{{blogContent.title}}</h4>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <p>Body</p>
+        <p>{{blogContent.body}}</p>
       </div>
     </div>
   </div>
@@ -33,13 +34,18 @@ import { useRoute } from "vue-router"
 import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 export default {
-  
+  props: {
+    blog: {
+      type: Object,
+      required: true
+    }
+  },
   setup(){
     const route = useRoute()
     onMounted(async () => {
      try {
        AppState.searchResults = {}
-       await blogsService.getByQuery({ id: route.params.id })
+       await blogsService.getByQuery({ _id: route.params.id })
      } catch (error) {
        logger.error(error)
        Pop.toast(error.message, 'error')
@@ -47,7 +53,8 @@ export default {
     })
     return {
       profile: computed(() => AppState.activeProfile),
-      searchResults: computed(() => AppState.searchResults)
+      // doing what mick told us not to do because its fun NOTE[epic=Maria]
+      blogContent: computed(() => AppState.searchResults[0])
     }
   }
 }

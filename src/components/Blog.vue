@@ -41,7 +41,8 @@ export default {
         router.push({ name: 'BlogDetailsPage', params: { id: props.blog.id } })
       },
       account: computed(() => AppState.account),
-      route
+      route,
+      props
     }
   }
 }

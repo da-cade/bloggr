@@ -9,8 +9,7 @@ class BlogsService {
     AppState.blogs = res.data
   }
   async getByQuery(params){
-    const res = await api.get('api/blogs', {params})
-    console.log(res.data)
+    const res = await api.get('api/blogs', { params })
     AppState.searchResults = res.data
   }
 }
